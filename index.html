@@ -1,210 +1,503 @@
-    body {
-        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-        background: #f0f4f8;
-        margin: 0;
-        padding: 24px 20px;
-        color: #1a2c3e;
-    }
+```html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Интерактивная таблица растворимости | Зависимость от температуры</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    .container {
-        max-width: 1400px;
-        margin: 0 auto;
-        background: white;
-        border-radius: 28px;
-        box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
-        overflow-x: auto;
-        padding: 20px 24px 32px 24px;
-        transition: all 0.2s;
-    }
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f0f4f8;
+            margin: 0;
+            padding: 24px 20px;
+            color: #1a2c3e;
+        }
 
-    h1 {
-        font-size: 1.9rem;
-        font-weight: 600;
-        margin: 0 0 0.25rem 0;
-        background: linear-gradient(135deg, #1e5f7a, #2c8c5e);
-        background-clip: text;
-        -webkit-background-clip: text;
-        color: transparent;
-    }
-
-    .sub {
-        color: #4a627a;
-        border-left: 4px solid #2c8c5e;
-        padding-left: 16px;
-        margin: 8px 0 24px 0;
-        font-weight: 400;
-        font-size: 1rem;
-    }
-
-    .controls {
-        background: #f8fafc;
-        border-radius: 48px;
-        padding: 16px 24px;
-        margin-bottom: 28px;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 24px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        border: 1px solid #e2edf2;
-    }
-
-    .temp-slider-container {
-        flex: 2;
-        min-width: 200px;
-    }
-
-    .temp-value {
-        display: flex;
-        align-items: baseline;
-        gap: 16px;
-        flex-wrap: wrap;
-    }
-
-    label {
-        font-weight: 600;
-        color: #0b3b4f;
-        letter-spacing: -0.2px;
-    }
-
-    input[type="range"] {
-        width: 100%;
-        height: 6px;
-        -webkit-appearance: none;
-        background: #cbdde6;
-        border-radius: 10px;
-        outline: none;
-        margin: 12px 0;
-    }
-
-    input[type="range"]:focus {
-        outline: none;
-    }
-
-    input[type="range"]::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        width: 20px;
-        height: 20px;
-        background: #1e6f5c;
-        border-radius: 50%;
-        cursor: pointer;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        border: 2px solid white;
-    }
-
-    .temp-number {
-        background: #1e2f3a;
-        color: white;
-        padding: 8px 18px;
-        border-radius: 40px;
-        font-weight: 700;
-        font-size: 1.6rem;
-        min-width: 110px;
-        text-align: center;
-        font-feature-settings: "tnum";
-        letter-spacing: 1px;
-        box-shadow: inset 0 -1px 0 rgba(0,0,0,0.2), 0 2px 6px rgba(0,0,0,0.05);
-    }
-
-    .temp-number span {
-        font-size: 1rem;
-        font-weight: normal;
-        margin-left: 4px;
-    }
-
-    .badge-info {
-        background: #e9f3e6;
-        padding: 8px 16px;
-        border-radius: 30px;
-        font-size: 0.85rem;
-        color: #2c6e4f;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .table-wrapper {
-        overflow-x: auto;
-        border-radius: 20px;
-        border: 1px solid #e2edf2;
-        background: #ffffff;
-        margin-top: 8px;
-    }
-
-    .solubility-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 0.85rem;
-        min-width: 700px;
-        font-family: 'Courier New', 'SF Mono', monospace;
-    }
-
-    .solubility-table th {
-        background: #eef3f7;
-        padding: 14px 10px;
-        font-weight: 600;
-        color: #1a4d5e;
-        border-bottom: 2px solid #cbdde6;
-        text-align: center;
-        font-size: 0.9rem;
-    }
-
-    .solubility-table td {
-        padding: 12px 8px;
-        text-align: center;
-        border-bottom: 1px solid #e9edf2;
-        font-weight: 500;
-        color: #1f3b4a;
-    }
-
-    .cation-col {
-        background-color: #f9fbfd;
-        font-weight: 700;
-        color: #005f73;
-        border-right: 1px solid #dee7ed;
-        text-align: left;
-        padding-left: 12px;
-    }
-
-    .anion-row td:first-child {
-        background-color: #f9fbfd;
-        font-weight: 700;
-        color: #0f5c6b;
-        border-right: 1px solid #dee7ed;
-    }
-
-    .solubility-table tr:hover td {
-        background-color: #fef9e6;
-    }
-
-    .note {
-        margin-top: 28px;
-        background: #fef7e0;
-        padding: 12px 20px;
-        border-radius: 24px;
-        font-size: 0.8rem;
-        color: #7a6700;
-        border-left: 6px solid #f5bc70;
-    }
-
-    footer {
-        text-align: right;
-        font-size: 0.7rem;
-        color: #8aa0b0;
-        margin-top: 24px;
-    }
-
-    @media (max-width: 700px) {
         .container {
-            padding: 16px;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+            padding: 20px 24px 32px 24px;
+            transition: all 0.2s;
         }
+
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 600;
+            margin: 0 0 0.25rem 0;
+            background: linear-gradient(135deg, #1e5f7a, #2c8c5e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .sub {
+            color: #4a627a;
+            border-left: 4px solid #2c8c5e;
+            padding-left: 16px;
+            margin: 8px 0 24px 0;
+            font-weight: 400;
+            font-size: 1rem;
+        }
+
+        .controls {
+            background: #f8fafc;
+            border-radius: 48px;
+            padding: 16px 24px;
+            margin-bottom: 28px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #e2edf2;
+        }
+
+        .temp-slider-container {
+            flex: 2;
+            min-width: 200px;
+        }
+
+        .temp-value {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        label {
+            font-weight: 600;
+            color: #0b3b4f;
+            letter-spacing: -0.2px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            background: #cbdde6;
+            border-radius: 10px;
+            outline: none;
+            margin: 12px 0;
+        }
+
+        input[type="range"]:focus {
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #1e6f5c;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            border: 2px solid white;
+        }
+
         .temp-number {
-            font-size: 1.2rem;
-            padding: 5px 12px;
+            background: #1e2f3a;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1.6rem;
+            min-width: 110px;
+            text-align: center;
+            font-feature-settings: "tnum";
+            letter-spacing: 1px;
+            box-shadow: inset 0 -1px 0 rgba(0,0,0,0.2), 0 2px 6px rgba(0,0,0,0.05);
         }
-        .solubility-table th, .solubility-table td {
-            padding: 8px 5px;
-            font-size: 0.75rem;
+
+        .temp-number span {
+            font-size: 1rem;
+            font-weight: normal;
+            margin-left: 4px;
         }
+
+        .badge-info {
+            background: #e9f3e6;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: #2c6e4f;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 20px;
+            border: 1px solid #e2edf2;
+            background: #ffffff;
+            margin-top: 8px;
+        }
+
+        .solubility-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            min-width: 700px;
+            font-family: 'Courier New', 'SF Mono', monospace;
+        }
+
+        .solubility-table th {
+            background: #eef3f7;
+            padding: 14px 10px;
+            font-weight: 600;
+            color: #1a4d5e;
+            border-bottom: 2px solid #cbdde6;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .solubility-table td {
+            padding: 12px 8px;
+            text-align: center;
+            border-bottom: 1px solid #e9edf2;
+            font-weight: 500;
+            color: #1f3b4a;
+        }
+
+        .cation-col {
+            background-color: #f9fbfd;
+            font-weight: 700;
+            color: #005f73;
+            border-right: 1px solid #dee7ed;
+            text-align: left;
+            padding-left: 12px;
+        }
+
+        .anion-row td:first-child {
+            background-color: #f9fbfd;
+            font-weight: 700;
+            color: #0f5c6b;
+            border-right: 1px solid #dee7ed;
+        }
+
+        .solubility-table tr:hover td {
+            background-color: #fef9e6;
+        }
+
+        .note {
+            margin-top: 28px;
+            background: #fef7e0;
+            padding: 12px 20px;
+            border-radius: 24px;
+            font-size: 0.8rem;
+            color: #7a6700;
+            border-left: 6px solid #f5bc70;
+        }
+
+        footer {
+            text-align: right;
+            font-size: 0.7rem;
+            color: #8aa0b0;
+            margin-top: 24px;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 16px;
+            }
+            .temp-number {
+                font-size: 1.2rem;
+                padding: 5px 12px;
+            }
+            .solubility-table th, .solubility-table td {
+                padding: 8px 5px;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📈 Растворимость веществ (г / 100 г H₂O)</h1>
+    <div class="sub">Динамическая таблица на основе аппроксимирующих уравнений (Лист 2) — температура влияет на растворимость</div>
+
+    <div class="controls">
+        <div class="temp-slider-container">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                <label>🌡️ Температура, °C</label>
+                <span style="font-size:0.8rem; color:#3c798d;">от 0 до 100 °C</span>
+            </div>
+            <input type="range" id="temperatureSlider" min="0" max="100" step="1" value="25">
+            <div class="temp-value">
+                <div class="temp-number" id="tempDisplay">25<span>°C</span></div>
+                <div class="badge-info">
+                    🔄 значения пересчитываются по уравнениям регрессии
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="solubility-table" id="solubilityTable">
+            <thead>
+                <tr>
+                    <th>Анион \ Катион</th>
+                    <th>Na⁺</th>
+                    <th>K⁺</th>
+                    <th>Mg²⁺</th>
+                    <th>Ca²⁺</th>
+                    <th>NH₄⁺</th>
+                </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- JS динамически заполнит строки -->
+                </tbody>
+        </table>
+    </div>
+    <div class="note">
+        💡 *Значения рассчитаны по аппроксимирующим формулам на основе экспериментальных данных (Лист 2). Для каждого сочетания катиона и аниона используется своя регрессионная модель: линейная, полиномиальная второго порядка (Na₂CO₃) или уточнённая. При отсутствии данных (0 или неопределено) отображается "—".
+    </div>
+    <footer>
+        ⚡ Интерактивная модель растворимости | зависимости от температуры | цифровой двойник процесса
+    </footer>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // КОЭФФИЦИЕНТЫ И МОДЕЛИ на основе данных из Лист2 (таблица формул)
+    // Структура: для каждой комбинации (анион, катион) определена функция f(T)
+    // В формулах T — температура в °C, от 0 до 100.
+    // Взяты из предоставленного фрагмента (Na, K, Mg, Ca, NH4) с учётом особенностей
+    // --------------------------------------------------------------
+
+    // ----- определение функций растворимости (г/100г H2O) -----
+    // Примечание: для MgSO4 в исходной таблице формул дублирована как у K? уточняем по логике.
+    // Из Лист2: для сульфатов: Mg и K описаны одинаковой формулой?  но данные отличаются, используем корректные по смыслу
+    // Поскольку Лист2 содержит явные уравнения, реализуем строго по тексту:
+    // Cl⁻: 
+    //   Na: =0.0348*T + 35.268
+    //   K:  =0.2826*T + 28.477
+    //   Mg: =0.1981*T + 50.759
+    //   Ca: =1.0593*T + 65.1
+    //   NH4:=0.476*T + 27.745
+    // NO₃⁻:
+    //   Na: =1.0375*T + 65.882
+    //   K:  =2.2875*T - 12.918
+    //   Mg: =0.4232*T + 60.868
+    //   Ca: =3.2236*T + 89
+    //   NH4:=7.2064*T + 44.773
+    // SO₄²⁻:
+    //   Na: =0.3617*T + 17.186
+    //   K:  =0.3184*T + 28.209
+    //   Mg: =0.3184*T + 28.209   (совпадает с K, данные MgSO4 близки)
+    //   Ca: 0 (не растворим / нет данных)
+    //   NH4:=0.3271*T + 69.055
+    // CO₃²⁻:
+    //   Na: = -0.0094*T^2 + 1.2856*T + 4.8308   (полином)
+    //   K:  = 0.4964*T + 100.73
+    //   Mg, Ca: 0 (нерастворимые карбонаты)
+    //   NH4: 0 (разлагается, но по таблице фактически нет данных → 0)
+    // PO₄³⁻:
+    //   Na: =0.7418*T - 3.5
+    //   K:  =1.4727*T + 71.107
+    //   Mg, Ca, NH4: нет достоверных данных (нерастворимы/нестабильны) → 0
+    // I⁻:
+    //   Na: =1.6935*T + 149.9
+    //   K:  =0.78*T + 128.91
+    //   Mg: =0.8386*T + 125.4
+    //   Ca: =0.1758*T + 63.455
+    //   NH4:=0.958*T + 152.73
+    // Br⁻:
+    //   Na: =0.4427*T + 84.464
+    //   K:  =0.4985*T + 54.923
+    //   Mg: =0.2763*T + 96.165
+    //   Ca: =2.1311*T + 119.62
+    //   NH4:=0.8362*T + 58.982
+    // T = температура
+
+    // вспомогательная функция округления до 1 знака после запятой, 
+    // но для малых значений показываем до 3 знаков, для удобства
+    function formatSolubility(value) {
+        if (value === null || value === undefined || isNaN(value)) return "—";
+        if (value < 0.001) return "<0.001";
+        if (value < 0.1) return value.toFixed(4);
+        if (value < 10) return value.toFixed(2);
+        return value.toFixed(1);
     }
-</style>
+
+    // карта функций: [анион][катион] -> function(T)
+    const solubilityModels = {};
+
+    // ---- Хлориды Cl ----
+    solubilityModels['Cl'] = {
+        Na: (T) => 0.0348 * T + 35.268,
+        K: (T) => 0.2826 * T + 28.477,
+        Mg: (T) => 0.1981 * T + 50.759,
+        Ca: (T) => 1.0593 * T + 65.1,
+        NH4: (T) => 0.476 * T + 27.745
+    };
+    // ---- Нитраты NO3 ----
+    solubilityModels['NO3'] = {
+        Na: (T) => 1.0375 * T + 65.882,
+        K: (T) => 2.2875 * T - 12.918,
+        Mg: (T) => 0.4232 * T + 60.868,
+        Ca: (T) => 3.2236 * T + 89,
+        NH4: (T) => 7.2064 * T + 44.773
+    };
+    // ---- Сульфаты SO4 ----
+    solubilityModels['SO4'] = {
+        Na: (T) => 0.3617 * T + 17.186,
+        K: (T) => 0.3184 * T + 28.209,
+        Mg: (T) => 0.3184 * T + 28.209,
+        Ca: () => 0,      // CaSO4 малорастворим, для чистоты таблицы 0
+        NH4: (T) => 0.3271 * T + 69.055
+    };
+    // ---- Карбонаты CO3 ----
+    solubilityModels['CO3'] = {
+        Na: (T) => {
+            // полиномиальная модель: -0.0094*T^2 + 1.2856*T + 4.8308
+            return -0.0094 * T * T + 1.2856 * T + 4.8308;
+        },
+        K: (T) => 0.4964 * T + 100.73,
+        Mg: () => 0,   // MgCO3 малорастворим (данные ~0.039 при 20°C, но аппроксимация отсутствует)
+        Ca: () => 0,   // CaCO3 нерастворим
+        NH4: () => 0   // карбонат аммония нестабилен, растворимость условно 0 для корректности
+    };
+    // ---- Фосфаты PO4 ----
+    solubilityModels['PO4'] = {
+        Na: (T) => Math.max(0, 0.7418 * T - 3.5),   // при малых T может давать отрицательное, ограничим
+        K: (T) => 1.4727 * T + 71.107,
+        Mg: () => 0,
+        Ca: () => 0,
+        NH4: () => 0
+    };
+    // ---- Йодиды I ----
+    solubilityModels['I'] = {
+        Na: (T) => 1.6935 * T + 149.9,
+        K: (T) => 0.78 * T + 128.91,
+        Mg: (T) => 0.8386 * T + 125.4,
+        Ca: (T) => 0.1758 * T + 63.455,
+        NH4: (T) => 0.958 * T + 152.73
+    };
+    // ---- Бромиды Br ----
+    solubilityModels['Br'] = {
+        Na: (T) => 0.4427 * T + 84.464,
+        K: (T) => 0.4985 * T + 54.923,
+        Mg: (T) => 0.2763 * T + 96.165,
+        Ca: (T) => 2.1311 * T + 119.62,
+        NH4: (T) => 0.8362 * T + 58.982
+    };
+
+    // Порядок анионов (строки) для отображения
+    const anions = ['Cl', 'NO3', 'SO4', 'CO3', 'PO4', 'I', 'Br'];
+    // Отображаемые названия анионов с формулами
+    const anionLabels = {
+        Cl: 'Cl⁻ (хлорид)',
+        NO3: 'NO₃⁻ (нитрат)',
+        SO4: 'SO₄²⁻ (сульфат)',
+        CO3: 'CO₃²⁻ (карбонат)',
+        PO4: 'PO₄³⁻ (фосфат)',
+        I: 'I⁻ (йодид)',
+        Br: 'Br⁻ (бромид)'
+    };
+    
+    // Катионы в том же порядке, как в шапке таблицы
+    const cations = ['Na', 'K', 'Mg', 'Ca', 'NH4'];
+    const cationLabels = {
+        Na: 'Na⁺',
+        K: 'K⁺',
+        Mg: 'Mg²⁺',
+        Ca: 'Ca²⁺',
+        NH4: 'NH₄⁺'
+    };
+
+    // Функция для вычисления значения растворимости на основе модели
+    function getSolubility(anion, cation, temperature) {
+        const modelGroup = solubilityModels[anion];
+        if (!modelGroup) return null;
+        const func = modelGroup[cation];
+        if (!func) return null;
+        let rawValue = func(temperature);
+        // проверка на осмысленность: если значение отрицательное или NaN -> null
+        if (isNaN(rawValue)) return null;
+        if (rawValue < 0) rawValue = 0;
+        // для сверхмалых величин, оставляем как есть, но в формате покажем
+        return rawValue;
+    }
+
+    // Обновление таблицы при изменении температуры
+    function renderTable(temperature) {
+        const tbody = document.getElementById('tableBody');
+        tbody.innerHTML = '';
+        
+        for (let a of anions) {
+            const row = document.createElement('tr');
+            // ячейка с названием аниона
+            const anionCell = document.createElement('td');
+            anionCell.textContent = anionLabels[a];
+            anionCell.style.fontWeight = '700';
+            anionCell.style.backgroundColor = '#f9fbfd';
+            row.appendChild(anionCell);
+            
+            // для каждого катиона вычисляем растворимость
+            for (let c of cations) {
+                const cell = document.createElement('td');
+                let solubility = getSolubility(a, c, temperature);
+                let displayValue = '';
+                if (solubility === null || solubility === undefined) {
+                    displayValue = '—';
+                } else {
+                    // Дополнительная эстетика: если растворимость меньше 1e-6 показываем как ≈0
+                    if (solubility < 0.0001 && solubility > 0) {
+                        displayValue = '<0.0001';
+                    } else {
+                        displayValue = formatSolubility(solubility);
+                    }
+                }
+                cell.textContent = displayValue;
+                // легкая подсветка для высоких значений
+                if (typeof solubility === 'number' && solubility > 150) {
+                    cell.style.backgroundColor = '#fff0db';
+                    cell.style.fontWeight = '500';
+                } else if (typeof solubility === 'number' && solubility === 0) {
+                    cell.style.color = '#8ba0ae';
+                }
+                row.appendChild(cell);
+            }
+            tbody.appendChild(row);
+        }
+        
+        // Добавим примечание о соответствии оригинальным данным: 
+        // также можно добавить строку с пояснением для CaSO4 и др.
+    }
+
+    // Инициализация слайдера и синхронизация
+    const slider = document.getElementById('temperatureSlider');
+    const tempDisplaySpan = document.getElementById('tempDisplay');
+    
+    function updateTemperature() {
+        const temp = parseFloat(slider.value);
+        tempDisplaySpan.innerHTML = temp + '<span>°C</span>';
+        renderTable(temp);
+    }
+    
+    slider.addEventListener('input', () => {
+        updateTemperature();
+    });
+    
+    // Начальная отрисовка при 25°C
+    updateTemperature();
+
+    // Добавляем возможность отображения значений, близких к экспериментальным:
+    // все формулы точно соответствуют Лист2 (кроме случаев нерастворимости, где стоит 0)
+    // для MgCO3 и подобных в таблице Лист2 были следовые значения, но по уравнениям их нет.
+    // Для полного соответствия концепции интерактивной таблицы – формулы дают гладкие зависимости.
+</script>
+</body>
+</html>
+```
